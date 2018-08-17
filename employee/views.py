@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 from __future__ import unicode_literals
 
 import math
@@ -10,7 +10,7 @@ from db_manager.models import *
 from django.shortcuts import render, redirect
 
 
-#自定义分页函数
+# 自定义分页函数
 def pages(employ_list, num):
     num = int(num)
     pageobj = Paginator(employ_list, 24)
@@ -26,7 +26,7 @@ def pages(employ_list, num):
 # 员工的信息展示, 与查询
 class Employinfo(View):
     def get(self, request, *args, **kwargs):
-        employ_list = Employee_Info.objects.all()
+        employ_list = Employee_Info.objects.filter(employee_delete=False)
         num = request.GET.get('num', 1)
         print('employ num', num)
         employ_list, pageall = pages(employ_list, num)
@@ -39,26 +39,26 @@ class Employinfo(View):
         if query_form is None:
             return redirect('/employee/employinfo/')
         if query_value == '1':
-            employ_list = Employee_Info.objects.filter(employee_name__contains=query_form)
+            employ_list = Employee_Info.objects.filter(employee_name__contains=query_form).filter(employee_delete=False)
         elif query_value == '2':
             dapart_id = Department_Info.objects.filter(department_name__contains=query_form)
-            employ_list = Employee_Info.objects.filter(employee_department=dapart_id)
+            employ_list = Employee_Info.objects.filter(employee_department=dapart_id).filter(employee_delete=False)
         elif query_value == '3':
             role_id = Role.objects.filter(role_name__contains=query_form)
-            employ_list = Employee_Info.objects.filter(employee_role=role_id)
+            employ_list = Employee_Info.objects.filter(employee_role=role_id).filter(employee_delete=False)
         else:
-            employ_list = Employee_Info.objects.filter(employee_education__contains=query_form)
+            employ_list = Employee_Info.objects.filter(employee_education__contains=query_form).filter(
+                employee_delete=False)
 
         if employ_list.count() == 0:
             return redirect('/employee/employinfo/')
         else:
             num = request.POST.get('num', 1)
-
             employ_list, pageall = pages(employ_list, num)
             return render(request, 'employeeinfo.html', {'employ_list': employ_list, 'pages': pageall})
 
 
-#员工的信息编辑
+# 员工的信息编辑
 class Edit(View):
     def get(self, request, *args, **kwargs):
         query_id = request.GET.get('id')
@@ -80,8 +80,9 @@ class Edit(View):
         user_idnum = query_dict.get('userIdnum')
         user_email = query_dict.get('userEmail')
         user_address = query_dict.get('userAddress')
-        depart_obj = Department_Info.objects.filter(department_name=user_department).first()
-        print('用户id', user_id)
+        depart_obj = Department_Info.objects.filter(department_name=user_department).filter(
+            department_delete=False).first()
+
         current_obj = Employee_Info.objects.filter(employee_id=user_id).update(
             employee_age=int(user_age),
             employee_nation=user_nation,
@@ -98,14 +99,14 @@ class Edit(View):
         return redirect('/employee/employinfo/', {'employee': current_obj})
 
 
-#员工的详细信息展示
+# 员工的详细信息展示
 def detail(request):
     query_id = request.GET.get('id')
     query_obj = Employee_Info.objects.filter(employee_id=int(query_id)).first()
     return render(request, 'employeedetail.html', {'employee': query_obj})
 
 
-#员工信息的删除
+# 员工信息的删除
 def delete(request):
     query_id = request.GET.get('id')
     query_obj = Employee_Info.objects.filter(employee_id=int(query_id)).first()
@@ -114,10 +115,10 @@ def delete(request):
     return HttpResponse(' 删除成功 ! ')
 
 
-#房屋的信息展示, 与查询
+# 房屋的信息展示, 与查询
 class Houseinfo(View):
     def get(self, request, *args, **kwargs):
-        house_list = House.objects.all()
+        house_list = House.objects.filter(house_delete=False)
         num = request.GET.get('num', 1)
         house_list, pageall = pages(house_list, num)
         return render(request, 'houseinfo.html', {'house_list': house_list, 'pages': pageall})
@@ -134,9 +135,9 @@ class Houseinfo(View):
             house_typeid = House_Type.objects.filter(h_type_name__contains=query_value)
             if house_typeid.count() == 0:
                 return redirect('/employee/houseinfo')
-            house_list = House.objects.filter(house_housetype=house_typeid)
+            house_list = House.objects.filter(house_housetype=house_typeid).filter(house_delete=False)
         else:
-            house_list = House.objects.filter(house_address__contains=query_value)
+            house_list = House.objects.filter(house_address__contains=query_value).filter(house_delete=False)
 
         if len(house_list) == 0:
             return redirect('/employee/houseinfo')
@@ -146,11 +147,11 @@ class Houseinfo(View):
             return render(request, 'houseinfo.html', {'house_list': house_list, 'pages': pageall})
 
 
-#房屋的信息添加
+# 房屋的信息添加
 class Houseadd(View):
     def get(self, request, *args, **kwargs):
-        house_typelist = House_Type.objects.all()
-        members = Employee_Info.objects.values('employee_name').all()
+        house_typelist = House_Type.objects.filter(h_type_delete=False)
+        members = Employee_Info.objects.values('employee_name').filter(employee_delete=False)
 
         return render(request, 'houseadd.html', {'house_types': house_typelist, 'members': members})
 
@@ -178,7 +179,7 @@ class Houseadd(View):
             return redirect('/employee/houseinfo')
 
 
-#房屋的信息编辑
+# 房屋的信息编辑
 class Houseedit(View):
     def get(self, request, *args, **kwargs):
         house_id = request.GET.get('id')
@@ -214,7 +215,7 @@ class Houseedit(View):
             return redirect('/employee/houseinfo')
 
 
-#房屋的信息删除
+# 房屋的信息删除
 def housedelete(request):
     house_id = int(request.GET.get('id'))
     house_obj = House.objects.filter(house_id=house_id).first()
@@ -223,10 +224,10 @@ def housedelete(request):
     return redirect('/employee/houseinfo')
 
 
-#房屋类型的信息展示, 与查询
+# 房屋类型的信息展示, 与查询
 class Housetypeinfo(View):
     def get(self, request, *args, **kwargs):
-        type_list = House_Type.objects.all()
+        type_list = House_Type.objects.filter(h_type_delete=False)
         num = request.GET.get('num', 1)
         type_list, pageall = pages(type_list, num)
         return render(request, 'housetype.html', {'type_list': type_list, 'pages': pageall})
@@ -236,7 +237,7 @@ class Housetypeinfo(View):
         if query_value is None:
             return redirect('/employee/housetypeinfo')
 
-        type_list = House_Type.objects.filter(h_type_name__contains=query_value)
+        type_list = House_Type.objects.filter(h_type_name__contains=query_value).filter(h_type_delete=False)
         if type_list.count() == 0:
             return redirect('/employee/housetypeinfo')
         else:
@@ -245,7 +246,7 @@ class Housetypeinfo(View):
             return render(request, 'housetype.html', {'type_list': type_list, 'pages': pageall})
 
 
-#房屋类型的信息添加
+# 房屋类型的信息添加
 class Housetypeadd(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'housetypeadd.html')
@@ -261,7 +262,7 @@ class Housetypeadd(View):
         return redirect('/employee/housetypeinfo')
 
 
-#房屋类型的删除
+# 房屋类型的删除
 def housetypedelete(request):
     type_id = int(request.GET.get('id'))
     print('ID..', type_id)
@@ -271,10 +272,10 @@ def housetypedelete(request):
     return redirect('/employee/housetypeinfo')
 
 
-#公告的信息展示, 与查询
+# 公告的信息展示, 与查询
 class Notices(View):
     def get(self, request, *args, **kwargs):
-        notice_list = Notice.objects.all()
+        notice_list = Notice.objects.filter(notice_delete=False)
         num = request.GET.get('num', 1)
         notice_list, pageall = pages(notice_list, num)
         return render(request, 'notice.html', {'notice_list': notice_list, 'pages': pageall})
@@ -286,9 +287,9 @@ class Notices(View):
         if query_value is None:
             return redirect('/employee/notice')
         if query_form is '1':
-            notice_list = Notice.objects.filter(notice_theme__contains=query_value)
+            notice_list = Notice.objects.filter(notice_theme__contains=query_value).filter(notice_delete=False)
         else:
-            notice_list = Notice.objects.filter(notice_content__contains=query_value)
+            notice_list = Notice.objects.filter(notice_content__contains=query_value).filter(notice_delete=False)
         if notice_list.count() == 0:
             return redirect('/employee/notice')
         else:
@@ -297,7 +298,7 @@ class Notices(View):
             return render(request, 'notice.html', {'notice_list': notice_list, 'pages': pageall})
 
 
-#公告的信息添加
+# 公告的信息添加
 class Noticesadd(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'noticeadd.html')
@@ -330,7 +331,7 @@ class Noticesadd(View):
             return redirect('/employee/notice')
 
 
-#公告的信息删除
+# 公告的信息删除
 def noticedelete(request):
     notice_id = int(request.GET.get('id'))
     notice_obj = Notice.objects.filter(notice_id=notice_id).first()
@@ -339,10 +340,10 @@ def noticedelete(request):
     return redirect('/employee/notice')
 
 
-#部门的信息展示, 与查询
+# 部门的信息展示, 与查询
 class Department(View):
     def get(self, request, *args, **kwargs):
-        depart_list = Department_Info.objects.all()
+        depart_list = Department_Info.objects.filter(department_delete=False)
         num = request.GET.get('num', 1)
         depart_list, pageall = pages(depart_list, num)
         return render(request, 'department.html', {'depart_list': depart_list, 'pages': pageall})
@@ -352,7 +353,8 @@ class Department(View):
 
         if query_value is None:
             return redirect('/employee/department')
-        depart_list = Department_Info.objects.filter(department_name__contains=query_value)
+        depart_list = Department_Info.objects.filter(department_name__contains=query_value).filter(
+            department_delete=False)
         if depart_list.count() == 0:
             return redirect('/employee/department')
         else:
@@ -361,7 +363,7 @@ class Department(View):
             return render(request, 'department.html', {'depart_list': depart_list, 'pages': pageall})
 
 
-#部门的信息删除
+# 部门的信息删除
 def departmentdelete(request):
     depart_id = int(request.GET.get('id'))
     depart_obj = Department_Info.objects.filter(department_id=depart_id).first()
