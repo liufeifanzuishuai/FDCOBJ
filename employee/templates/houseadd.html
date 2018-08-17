@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <base href="/employee/houseinfo">
+        <title>增加房屋信息</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+        <meta http-equiv="description" content="This is my page">
+        <LINK href="/static/admin.css" type=text/css rel=stylesheet>
+        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/CheckForm.js"></script>
+        <script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/FormValid.js"></script>
+    </head>
+
+    <body>
+        <form action="/employee/house/add" method="post" name="form2" onsubmit="return validator(this)">
+            {% csrf_token %}
+            <table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
+                <tr>
+                    <td bgcolor="#FFFDF0">
+                        <div align="center">
+                            户型：
+                        </div>
+                    </td>
+                    <td colspan="3" bgcolor="#FFFFFF">
+                        <select name="housetype" style="width: 145px">
+                            {% for type in house_types %}
+                                <option value="{{ type.h_type_name }}">
+                                    {{ type.h_type_name }}
+                                </option>
+                            {% endfor %}
+                        </select>&nbsp;
+                    </td>
+
+                    <td bgcolor="#FFFDF0">
+                        <div align="center">
+                            管理员工：
+                        </div>
+                    </td>
+                    <td colspan="3" bgcolor="#FFFFFF">
+                        <select name="housemanager" style="width: 145px">
+                            {% for member in members %}
+                                <option value="{{ member.employee_name }}">
+                                    {{ member.employee_name }}
+                                </option>
+                            {% endfor %}
+                        </select>&nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <td bgcolor="#FFFDF0">
+                        <div align="center">
+                            房屋住址：
+                        </div>
+                    </td>
+                    <td colspan="3" bgcolor="#FFFFFF">
+                        <input type="text" style="width: 145px" name="houseaddress" value="">&nbsp;
+                    </td>
+                    <td bgcolor="#FFFDF0">
+                        <div align="center">
+                            房屋环境：
+                        </div>
+                    </td>
+                    <td colspan="6" bgcolor="#FFFFFF">
+                        <input type="text" style="width: 145px" name="houseenv" value="">&nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <td bgcolor="#FFFDF0">
+                        <div align="center">
+                            房屋价格(平方米)：
+                        </div>
+                    </td>
+                    <td colspan="3" bgcolor="#FFFFFF">
+                        <input type="text" onblur="judge();" id="id-input" style="width: 145px" maxlength="10" name="houseprice" value="">&nbsp;
+                    </td>
+                </tr>
+            </table>
+            <table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
+                <tr bgcolor="#ECF3FD">
+                    <td width="36%"></td>
+                    <td width="17%"><input type="submit" name="submit" value="提交"></td>
+                    <td width="4%"><input type="button" name="button" onClick="history.back() " value="返回"></td>
+                    <td width="43%"></td>
+                </tr>
+            </table>
+        </form>
+        <script>
+            function judge() {
+                var value = $('#id-input').val()
+                var reg = /^\d+.*\d+$/gi
+                if(!reg.test(value)){
+                    alert('输入不合法, 例: 1.22')
+                }
+            }
+        </script>
+    </body>
+</html>
