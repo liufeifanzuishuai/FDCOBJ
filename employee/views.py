@@ -2,5 +2,5 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from db_manager.models import *
 
-# Create your views here.
