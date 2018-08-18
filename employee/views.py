@@ -13,7 +13,7 @@ from django.shortcuts import render, redirect
 # 定义分页函数
 def pages(employ_list, num):
     num = int(num)
-    pageobj = Paginator(employ_list, 1)
+    pageobj = Paginator(employ_list, 24)
     pageall = pageobj.num_pages
     if num > pageall:
         num = pageall
@@ -30,7 +30,9 @@ class Employinfo(View):
         num = request.GET.get('num', 1)
         print('employ num', num)
         employ_list, pageall = pages(employ_list, num)
-        return render(request, 'employeeinfo.html', {'employ_list': employ_list, 'pages': pageall})
+        if pageall < int(num):
+            num = pageall
+        return render(request, 'employeeinfo.html', {'employ_list': employ_list, 'pages': pageall, 'num': num})
 
     def post(self, request, *args, **kwargs):
         query_value = request.POST.get('queryType')
@@ -121,7 +123,9 @@ class Houseinfo(View):
         house_list = House.objects.filter(house_delete=False)
         num = request.GET.get('num', 1)
         house_list, pageall = pages(house_list, num)
-        return render(request, 'houseinfo.html', {'house_list': house_list, 'pages': pageall})
+        if pageall < int(num):
+            num = pageall
+        return render(request, 'houseinfo.html', {'house_list': house_list, 'pages': pageall, 'num': num})
 
     def post(self, request, *args, **kwargs):
         query_value = request.POST.get('houseInput')
@@ -228,7 +232,9 @@ class Housetypeinfo(View):
         type_list = House_Type.objects.filter(h_type_delete=False)
         num = request.GET.get('num', 1)
         type_list, pageall = pages(type_list, num)
-        return render(request, 'housetype.html', {'type_list': type_list, 'pages': pageall})
+        if pageall < int(num):
+            num = pageall
+        return render(request, 'housetype.html', {'type_list': type_list, 'pages': pageall, 'num': num})
 
     def post(self, request, *args, **kwargs):
         query_value = request.POST.get('houseTypeName', None)
@@ -276,7 +282,9 @@ class Notices(View):
         notice_list = Notice.objects.filter(notice_delete=False)
         num = request.GET.get('num', 1)
         notice_list, pageall = pages(notice_list, num)
-        return render(request, 'notice.html', {'notice_list': notice_list, 'pages': pageall})
+        if pageall < int(num):
+            num = pageall
+        return render(request, 'notice.html', {'notice_list': notice_list, 'pages': pageall, 'num': num})
 
     def post(self, request, *args, **kwargs):
         query_value = request.POST.get('noticeInput', None)
@@ -344,7 +352,9 @@ class Department(View):
         depart_list = Department_Info.objects.filter(department_delete=False)
         num = request.GET.get('num', 1)
         depart_list, pageall = pages(depart_list, num)
-        return render(request, 'department.html', {'depart_list': depart_list, 'pages': pageall})
+        if pageall < int(num):
+            num = pageall
+        return render(request, 'department.html', {'depart_list': depart_list, 'pages': pageall, 'num': num})
 
     def post(self, request, *args, **kwargs):
         query_value = request.POST.get('departmentName', None)
