@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<base href="/employee/notice">
+		<title>增加公共信息</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+		<meta http-equiv="description" content="This is my page">
+		<LINK href="/static/admin.css" type=text/css rel=stylesheet>
+        <script type="text/javascript" src="/static/CheckForm.js"></script>
+		<script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
+        <script language="JavaScript" type="text/javascript" src="/static/FormValid.js"></script>
+        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+		<form action="/employee/notice/add" method="post" name="form2" onsubmit="return validator(this)">
+            {% csrf_token %}
+			<table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
+
+				<tr>
+					<td bgcolor="#FFFDF0">
+						<div align="center">
+							公告主题：
+						</div>
+					</td>
+					<td  bgcolor="#FFFFFF">
+						<input type="text" class="noticetheme" onblur="nblur();" style="width: 145px" name="noticetheme" value="">
+						&nbsp;
+					</td>
+                    <td bgcolor="#FFFDF0">
+						<div align="left">
+							公告人：
+						</div>
+					</td>
+					<td bgcolor="#FFFFFF">
+						<input type="text" style="width: 145px" onblur="nblur();" class="noticeman" name="noticeman" value="">
+						&nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td bgcolor="#FFFDF0">
+						<div align="center">
+							公告内容：
+						</div>
+					</td>
+					<td  bgcolor="#FFFFFF">
+                        <textarea name="noticecontent" class="noticecontent" onblur="nblur()" cols="100" rows="25"></textarea>
+						&nbsp;
+					</td>
+				</tr>
+
+                <tr>
+					<td bgcolor="#FFFDF0">
+						<div align="left">
+							公告截止时间：
+						</div>
+					</td>
+					<td colspan="3" bgcolor="#FFFFFF">
+						<input type="date" style="width: 145px" name="noticedetime" value="">
+						&nbsp;
+					</td>
+				</tr>
+
+			</table>
+			<table class=editTable cellSpacing=1 cellPadding=0 width="100%"
+				align=center border=0>
+				<tr bgcolor="#ECF3FD">
+					<td width="36%"></td>
+					<td width="17%"><input type="submit" name="submit"  value="提交"></td>
+					<td width="4%"><input type="button" name="button"  onClick="history.back() "  value="返回"></td>
+					<td width="43%"></td>
+				</tr>
+			</table>
+		</form>
+        <script>
+            function nblur() {
+                var theme_val = $('.noticetheme').val().length
+                var content_val = $('.noticecontent').val().length
+                var man_val = $('.noticeman').val().length
+                console.log('aaa测试')
+                if(theme_val == 0 || content_val == 0 || man_val == 0){
+                    alert('输入不可为空 ! 瓜呱')
+                }
+            }
+        </script>
+	</body>
+</html>
