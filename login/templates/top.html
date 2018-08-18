@@ -23,13 +23,13 @@
 		var days = now.getDate();
 		var hours = now.getHours();
 		var minutes = now.getMinutes();
-		var seconds = now.getSeconds()
-		var timeValue =now.getFullYear()
-		timeValue +="-"+months+"-"+days+" "
-		timeValue += "" +((hours >= 12) ? "下午 " : "上午 " )
-		timeValue += ((hours >12) ? hours -12 :hours)
-		timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-		timeValue += ((seconds < 10) ? ":0" : ":") + seconds
+		var seconds = now.getSeconds();
+		var timeValue =now.getFullYear();
+		timeValue +="-"+months+"-"+days+" ";
+		timeValue += "" +((hours >= 12) ? "下午 " : "上午 " );
+		timeValue += ((hours >12) ? hours -12 :hours);
+		timeValue += ((minutes < 10) ? ":0" : ":") + minutes;
+		timeValue += ((seconds < 10) ? ":0" : ":") + seconds;
 		document.clock.thetime.value = timeValue;
 		timerID = setTimeout("showtime()",1000);
 		timerRunning = true;}
@@ -37,7 +37,7 @@
 function exit(){
 
 }
-</SCRIPT>
+</script>
 		<style type="text/css">
 <!--
 body {
@@ -132,7 +132,7 @@ a {
 																	</td>
 																	<td width="50">
 																		<div align="center">
-																			<a href="/login/" target="_parent"><img
+																			<a href="<%=basePath%>login.jsp" target="_parent"><img
 																					src="/static/main_20.gif"
 																					width="48" height="19">
 																			</a>
@@ -221,7 +221,7 @@ a {
 											</td>
 											<td width="59%" valign="bottom">
 												<div align="center" class="STYLE1">
-													您好:{{ userNum }}</div>
+													当前用户：李四</div>
 											</td>
 											<td width="21%">
 												&nbsp;
