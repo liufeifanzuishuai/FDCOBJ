@@ -10,7 +10,7 @@ from db_manager.models import *
 from django.shortcuts import render, redirect
 
 
-# 自定义分页函数
+# 定义分页函数
 def pages(employ_list, num):
     num = int(num)
     pageobj = Paginator(employ_list, 24)
@@ -129,13 +129,12 @@ class Houseinfo(View):
         print('aaa', query_form, query_value)
         if query_value is None:
             return redirect('/employee/houseinfo')
-        # print(type(query_form))
+
         if query_form == '1':
-            print('query_value', query_value)
-            house_typeid = House_Type.objects.filter(h_type_name__contains=query_value)
-            if house_typeid.count() == 0:
+            house_typelist = House_Type.objects.filter(h_type_name__contains=query_value)
+            if house_typelist.count() == 0:
                 return redirect('/employee/houseinfo')
-            house_list = House.objects.filter(house_housetype=house_typeid).filter(house_delete=False)
+            house_list = House.objects.filter(house_housetype=house_typelist).filter(house_delete=False)
         else:
             house_list = House.objects.filter(house_address__contains=query_value).filter(house_delete=False)
 
@@ -152,7 +151,6 @@ class Houseadd(View):
     def get(self, request, *args, **kwargs):
         house_typelist = House_Type.objects.filter(h_type_delete=False)
         members = Employee_Info.objects.values('employee_name').filter(employee_delete=False)
-
         return render(request, 'houseadd.html', {'house_types': house_typelist, 'members': members})
 
     def post(self, request, *args, **kwargs):
@@ -162,12 +160,12 @@ class Houseadd(View):
         house_env = request.POST.get('houseenv', None)
         house_price = request.POST.get('houseprice', None)
 
-        if house_address is None or house_env is None or house_price is None:
+        if len(house_address) == 0 or len(house_env) == 0 or len(house_price) == 0:
             return redirect('/employee/houseinfo')
         else:
             house_price = float(house_price)
-            type_obj = House_Type.objects.get(h_type_name=house_type)
-            manager_obj = Employee_Info.objects.get(employee_name=house_manager)
+            type_obj = House_Type.objects.filter(h_type_name=house_type).filter(h_type_delete=False).first()
+            manager_obj = Employee_Info.objects.filter(employee_name=house_manager).filter(employee_delete=False).first()
             new_houseadd = House.objects.create(
                 house_address=house_address,
                 house_price=house_price,
@@ -184,8 +182,8 @@ class Houseedit(View):
     def get(self, request, *args, **kwargs):
         house_id = request.GET.get('id')
         house_obj = House.objects.filter(house_id=int(house_id)).first()
-        house_typelist = House_Type.objects.all()
-        members = Employee_Info.objects.values('employee_name').all()
+        house_typelist = House_Type.objects.filter(h_type_delete=False)
+        members = Employee_Info.objects.values('employee_name').filter(employee_delete=False)
         return render(request, 'houseedit.html',
                       {'house': house_obj, 'house_types': house_typelist, 'members': members})
 
@@ -253,7 +251,7 @@ class Housetypeadd(View):
 
     def post(self, request, *args, **kwargs):
         type_name = request.POST.get('housetypename', None)
-        if type_name is None:
+        if len(type_name) == 0 or type_name is None:
             return redirect('/employee/housetypeinfo')
         try:
             typeobj = House_Type.objects.get(h_type_name=type_name)
@@ -283,10 +281,10 @@ class Notices(View):
     def post(self, request, *args, **kwargs):
         query_value = request.POST.get('noticeInput', None)
         query_form = request.POST.get('queryType')
-
+        print query_value
         if query_value is None:
             return redirect('/employee/notice')
-        if query_form is '1':
+        if query_form == '1':
             notice_list = Notice.objects.filter(notice_theme__contains=query_value).filter(notice_delete=False)
         else:
             notice_list = Notice.objects.filter(notice_content__contains=query_value).filter(notice_delete=False)

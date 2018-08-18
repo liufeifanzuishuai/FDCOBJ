@@ -13,6 +13,8 @@
         <script type="text/javascript" src="/static/CheckForm.js"></script>
 		<script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
         <script language="JavaScript" type="text/javascript" src="/static/FormValid.js"></script>
+        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+
 	</head>
 
 	<body>
@@ -27,7 +29,7 @@
 						</div>
 					</td>
 					<td  bgcolor="#FFFFFF">
-						<input type="text" style="width: 145px" name="noticetheme" value="">
+						<input type="text" class="noticetheme" onblur="nblur();" style="width: 145px" name="noticetheme" value="">
 						&nbsp;
 					</td>
                     <td bgcolor="#FFFDF0">
@@ -36,7 +38,7 @@
 						</div>
 					</td>
 					<td bgcolor="#FFFFFF">
-						<input type="text" style="width: 145px" name="noticeman" value="">
+						<input type="text" style="width: 145px" onblur="nblur();" class="noticeman" name="noticeman" value="">
 						&nbsp;
 					</td>
 				</tr>
@@ -48,7 +50,7 @@
 						</div>
 					</td>
 					<td  bgcolor="#FFFFFF">
-                        <textarea name="noticecontent" cols="100" rows="25"></textarea>
+                        <textarea name="noticecontent" class="noticecontent" onblur="nblur()" cols="100" rows="25"></textarea>
 						&nbsp;
 					</td>
 				</tr>
@@ -76,5 +78,16 @@
 				</tr>
 			</table>
 		</form>
+        <script>
+            function nblur() {
+                var theme_val = $('.noticetheme').val().length
+                var content_val = $('.noticecontent').val().length
+                var man_val = $('.noticeman').val().length
+                console.log('aaa测试')
+                if(theme_val == 0 || content_val == 0 || man_val == 0){
+                    alert('输入不可为空 ! 瓜呱')
+                }
+            }
+        </script>
 	</body>
 </html>
