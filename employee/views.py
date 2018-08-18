@@ -13,7 +13,7 @@ from django.shortcuts import render, redirect
 # 定义分页函数
 def pages(employ_list, num):
     num = int(num)
-    pageobj = Paginator(employ_list, 24)
+    pageobj = Paginator(employ_list, 1)
     pageall = pageobj.num_pages
     if num > pageall:
         num = pageall
@@ -365,6 +365,12 @@ class Department(View):
 def departmentdelete(request):
     depart_id = int(request.GET.get('id'))
     depart_obj = Department_Info.objects.filter(department_id=depart_id).first()
+    employ_list = Employee_Info.objects.filter(employee_department=depart_obj).filter(employee_delete=False)
+
+    if len(employ_list) != 0:
+        for employee in employ_list:
+            employee.employee_delete = '1'
+            employee.save()
     depart_obj.department_delete = '1'
     depart_obj.save()
     return redirect('/employee/department')
