@@ -169,14 +169,15 @@
                                     </td>
                                     <td height="20" bgcolor="#FFFFFF" style="width: 8%">
                                         <div align="center"><span class="STYLE1">
-                                            {% for emp in allemp %}
                                                 <select name="Distribute" style="width: 145px">
-                                                            <option
+                                                    {% for emp in allemp %}
+                                                        <option
                                                                 selected="selected" >
                                                                 {{ emp.employee_name }}
                                                             </option>
+                                                    {% endfor %}
+
                                                     </select>
-                                            {% endfor %}
                                         <input type="submit" value="提交">
                                         </span></div>
                                     </td>

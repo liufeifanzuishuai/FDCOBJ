@@ -239,26 +239,38 @@
                         <td background="/static/tab_19.gif">
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                    <td class="STYLE4">&nbsp;&nbsp;共有 {{ count }} 条记录，当前第 1/1 页</td>
+                                    <td class="STYLE4">&nbsp;&nbsp;共有 {{count }} 条记录，当前第 {{ num }}/{{ pages }} 页
                                     <td>
                                         <table border="0" align="right" cellpadding="0" cellspacing="0">
                                             <tr>
 {#                                                首页图片#}
+                                                 <td width="40">
+                                                            <a href="/customer/distribute/">
+                                                                <img src="/static/first.gif" width="37" height="15"/>
+                                                            </a>
+                                                        </td>
                                                 <td width="40">
-                                                    <img src="/static/first.gif" width="37" height="15"/>
-                                                </td>
 {#                                                上一页#}
-                                                <td width="45">
-                                                    <img src="/static/back.gif" width="43" height="15"/>
+                                                   {% if customer_Info_list.has_previous %}
+                                                                 <a href="/customer/distribute/?num={{ customer_Info_list.previous_page_number }}">
+                                                                     <img src="/static/back.gif" width="43" height="15"/>
+                                                                 </a>
+                                                   {% endif %}
                                                 </td>
-{#                                                下一页#}
-                                                <td width="45">
-                                                   <img src="/static/next.gif" width="43" height="15"/>
-                                                </td>
-{#                                                尾页#}
+                                                {#下一页#}
                                                 <td width="40">
-                                                    <img src="/static/last.gif" width="37" height="15"/>
+
+                                                    {% if customer_Info_list.has_next %}
+                                                                <a href="/employee/houseinfo?num={{ customer_Info_list.next_page_number }}">
+                                                                    <img src="/static/next.gif" width="43" height="15"/>
+                                                                </a>
+                                                    {% endif %}
                                                 </td>
+                                                <td width="40">
+                                                            <a href="/customer/distribute/?num={{ pages }}">
+                                                                 <img src="/static/last.gif" width="37" height="15"/>
+                                                            </a>
+                                                        </td>
 
                                                 <td width="100">
                                                     <div align="center">
