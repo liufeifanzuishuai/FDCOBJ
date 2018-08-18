@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+
 # Create your models here.
 
 # 客户类型表
@@ -215,4 +216,3 @@ class Customer_Care(models.Model):
 
 
 
-Customer_Info.objects.all()

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看已有角色</title>
+</head>
+<style>
+    img{
+        width: 500px;
+        position: relative;
+    }
+    .div1{
+        margin-left: 680px;
+    }
+    .div2{
+        position: absolute;
+        top: 80px;
+        left: 350px;
+    }
+</style>
+<body>
+<div class="div1">
+<img src="/static/juese.jpg">
+
+</div>
+<div class="div2">
+<h3 align="center">已有角色：</h3>
+<table border="1" cellspacing="0" align="center" width="300px">
+    <tr align="center">
+        <th>角色名称</th>
+        <th>角色星级</th>
+    </tr>
+    {% for role in role_list %}
+        <tr align="center">
+            <td >{{ role.role_name }}</td>
+            <td>{{ role.role_grade }}</td>
+        </tr>
+    {% endfor %}
+    <tr align="right"><td colspan="2"><input type="button"   onClick="history.back() "  value="返回" ></td></tr>
+</table>
+</div>
+
+</body>
+</html>
