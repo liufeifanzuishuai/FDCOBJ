@@ -306,7 +306,7 @@
                                                         </td>
                                                         <td width="45">
                                                             {% if employ_list.has_previous %}
-                                                                <a href="/employee/employinfo/?num={{ employ_list.previous_page_num }}">
+                                                                <a href="/employee/employinfo/?num={{ employ_list.previous_page_number }}">
                                                                     <img src="/static/back.gif" width="43" height="15"/>
                                                                 </a>
                                                             {% endif %}
@@ -314,7 +314,7 @@
                                                         </td>
                                                         <td width="45">
                                                             {% if employ_list.has_next %}
-                                                                <a href="/employee/employinfo/?num={{ employ_list.previous_page_num }}">
+                                                                <a href="/employee/employinfo/?num={{ employ_list.next_page_number }}">
                                                                     <img src="/static/next.gif" width="43" height="15"/>
                                                                 </a>
                                                             {% endif %}
