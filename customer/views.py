@@ -294,3 +294,108 @@ def del_source(request):
     source.save()
     return HttpResponseRedirect('/customer/customer_source/')
 
+
+## 客户关怀
+def care_view(request):
+    if request.method=='GET':
+        care_list=Customer_Care.objects.filter(care_is_delete=False)
+        num, list_page, counter, page_counter=paging(request,care_list)
+        return render(request,'customer_care_list.html',
+                        {'care_list':list_page,'num':num,'list_page':list_page,'counter':counter,'page_counter':page_counter})
+    else:
+        query_content=request.POST.get('query_content')
+        query_way=request.POST.get('query_way')
+        care_list1=None
+        # 关怀客户
+        if query_way=='1':
+            care_list1=Customer_Care.objects.filter(cus_care__c_name__contains=query_content,care_is_delete=False)
+        # 关怀主题
+        elif query_way=='2':
+            care_list1=Customer_Care.objects.filter(care_theme__contains=query_content,care_is_delete=False)
+        # 关怀方式
+        elif query_way=='3':
+            care_list1=Customer_Care.objects.filter(care_way__contains=query_content,care_is_delete=False)
+
+        num, list_page, counter, page_counter = paging(request, care_list1)
+        return render(request, 'customer_care_list.html',
+                      {'care_list': list_page, 'num': num, 'list_page': list_page, 'counter': counter,
+                       'page_counter': page_counter})
+
+
+
+
+
+def add_careinfo(care_theme,c_care,care_time,careNexttime1,careWay,care_remark,**kwargs):
+    cus_care=Customer_Info.objects.get(c_name=c_care[0])
+    Customer_Care.objects.create(care_theme=care_theme[0],
+                                    care_time=care_time[0],
+                                    care_nexttime=careNexttime1[0],
+                                    care_way=careWay[0],
+                                    care_remark=care_remark[0],
+                                    cus_care=cus_care,
+                                 )
+
+# 关怀添加
+def care_add(request):
+    if request.method=='GET':
+        care_list=Customer_Care.objects.filter(care_is_delete=False)
+        customer_list=Customer_Info.objects.filter(c_is_delete=False)
+        carelist = []
+        customerlist=[]
+        for customer in customer_list:
+            customerlist.append(customer)
+            for care in care_list:
+                carelist.append(care)
+                if customer.customer_id == care.cus_care_id:
+                    customerlist.remove(customer)
+        return render(request,'customer_care_add.html',{'customer_list':customerlist})
+
+    else:
+        add_careinfo(**request.POST)
+        return HttpResponseRedirect('/customer/customer_care/')
+
+
+def care_eidt_info(care_id,care_theme,c_care,care_nexttime,care_way,care_remark,**kwargs):
+    care=Customer_Care.objects.get(care_id=care_id[0])
+    cus_care=Customer_Info.objects.get(c_name=c_care[0])
+
+    care.care_theme = care_theme[0]
+    care.care_nexttime = care_nexttime[0]
+    care.care_way = care_way[0]
+    care.care_remark = care_remark[0]
+    care.cus_care = cus_care
+
+    care.save()
+
+# 关怀编辑
+def care_eidt(request):
+    if request.method=='GET':
+        care_id=request.GET.get('care_id')
+        care1=Customer_Care.objects.get(care_id=care_id)
+
+        care_list = Customer_Care.objects.filter(care_is_delete=False)
+        customer_list = Customer_Info.objects.filter(c_is_delete=False)
+        carelist = []
+        customerlist = []
+        for customer in customer_list:
+            customerlist.append(customer)
+            for care in care_list:
+                carelist.append(care)
+                if customer.customer_id == care.cus_care_id:
+                    customerlist.remove(customer)
+        customerlist.append(care1.cus_care)
+
+        return render(request,'customer_care_edit.html',{'care1':care1,'customerlist':customerlist})
+
+    else:
+        print request.POST
+        care_eidt_info(**request.POST)
+        return HttpResponseRedirect('/customer/customer_care/')
+
+# 删除关怀
+def del_care(request):
+    care_id=request.GET.get('care_id')
+    care=Customer_Care.objects.get(care_id=care_id)
+    care.care_is_delete=True
+    care.save()
+    return HttpResponseRedirect('/customer/customer_care/')

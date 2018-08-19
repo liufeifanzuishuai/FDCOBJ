@@ -38,4 +38,13 @@ urlpatterns=[
     url(r'^source_add/$',views.source_add),
     # 来源删除
     url(r'^del_source/$',views.del_source),
+
+    ## 客户关怀
+    url(r'^customer_care/$',views.care_view),
+    # 关怀添加
+    url(r'^care_add/$',views.care_add),
+    # 关怀编辑
+    url(r'^care_edit/$',views.care_eidt),
+    # 删除关怀
+    url(r'^del_care/$',views.del_care),
 ]
