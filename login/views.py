@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+import operator
+import datetime
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
 from db_manager.models import *
@@ -60,10 +61,103 @@ def top_view(request):
 def left_view(request):
     return render(request,'left.html')
 
+def ontime():
+    import time
+    format = '%m-%d'
+    value = time.localtime(int(time.time()))
+    dt = time.strftime(format, value)
+    return dt
 
 def center_view(request):
-    return render(request,'center.html')
+    notice_list = Notice.objects.filter(notice_delete=False).order_by('-notice_id')[:4]
+    care_list = Customer_Care.objects.filter(care_is_delete=False).order_by('care_time')[:4]
+    date_time = ontime()
+    customer_list = Customer_Info.objects.filter(c_is_delete=False)
+    dic = {}
+    for customer in customer_list:
+        val = customer.c_birthdate.strftime('%m/%d')
+        if val > date_time:
+            c_id = customer.customer_id
+            val = customer.c_birthdate
+            dic[c_id] = val
+
+    order_tuple = sorted(dic.items(), key=operator.itemgetter(1), reverse=True)
+    list_obj = []
+    count = 0
+    for order_id in order_tuple:
+        for cus in customer_list:
+            if cus.customer_id == order_id[0]:
+                list_obj.append(cus)
+                count = count + 1
+                if count > 4:
+                    break
+                continue
+
+    return render(request, 'center.html', {
+        'notice_list': notice_list,
+        'care_list': care_list,
+        'customer_list': list_obj,
+    })
 
 
 def down_view(request):
     return render(request,'down.html')
+
+
+
+def center_info(request):
+    query_time1 = request.POST.get('addTime')
+    query_time2 = request.POST.get('addTime2')
+    on_time = datetime.datetime.now().date()
+    # on_moretime = (datetime.datetime.now().date() + datetime.timedelta(days=1))
+    care_list = Customer_Care.objects.filter(care_is_delete=False).order_by('care_time')
+    notice_list = Notice.objects.filter(notice_delete=False).order_by('-notice_id')[:4]
+
+    if query_time1 == '0':
+        care_list = care_list.filter(care_time=on_time)[:4]
+    elif query_time1 == '7':
+        care_list1 = care_list.filter(care_time__gte=on_time)
+        care_list = care_list1.filter(care_time__lt=(on_time + datetime.timedelta(days=7)))[:4]
+    elif query_time1 == '15':
+        care_list1 = care_list.filter(care_time__gte=on_time)
+        care_list = care_list1.filter(care_time__lt=(on_time + datetime.timedelta(days=14)))[:4]
+    else:
+        care_list1 = care_list.filter(care_time__gte=on_time)
+        care_list = care_list1.filter(care_time__lt=(on_time + datetime.timedelta(days=30)))[:4]
+
+    customer_list = Customer_Info.objects.filter(c_is_delete=False)
+    sum_dic = {}
+    cus_list = []
+    cus_list7 = []
+    cus_list15 = []
+    cus_list30 = []
+
+    for customer in customer_list:
+        val = customer.c_birthdate.strftime('%m/%d')
+
+        if val == on_time.strftime('%m/%d'):
+            cus_list.append(customer)
+        if val < (datetime.datetime.now().date() + datetime.timedelta(days=7)).strftime('%m/%d') and val > (
+                datetime.datetime.now().date()).strftime('%m/%d'):
+            cus_list7.append(customer)
+        if val < (datetime.datetime.now().date() + datetime.timedelta(days=15)).strftime('%m/%d') and val > (
+                datetime.datetime.now().date()).strftime('%m/%d'):
+            cus_list15.append(customer)
+        if val < (datetime.datetime.now().date() + datetime.timedelta(days=30)).strftime('%m/%d') and val > (
+                datetime.datetime.now().date()).strftime('%m/%d'):
+            cus_list30.append(customer)
+
+    if query_time2 == '0':
+        customer_list = cus_list[:4]
+    elif query_time2 == '7':
+        customer_list = cus_list7[:4]
+    elif query_time2 == '15':
+        customer_list = cus_list15[:4]
+    else:
+        customer_list = cus_list30[:4]
+
+    return render(request, 'center.html', {
+        'notice_list': notice_list,
+        'care_list': care_list,
+        'customer_list': customer_list,
+    })

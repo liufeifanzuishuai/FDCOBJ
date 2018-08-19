@@ -9,4 +9,5 @@ urlpatterns=[
     url(r'^fist/left.html/$',views.left_view),
     url(r'^fist/center.html/$',views.center_view),
     url(r'^fist/down.html/$',views.down_view),
+    url(r'^fist/showinfo$',views.center_info),
 ]
