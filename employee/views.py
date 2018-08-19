@@ -128,14 +128,14 @@ class Houseinfo(View):
         return render(request, 'houseinfo.html', {'house_list': house_list, 'pages': pageall, 'num': num})
 
     def post(self, request, *args, **kwargs):
-        query_value = request.POST.get('houseInput')
-        query_form = request.POST.get('queryType', None)
-        print('aaa', query_form, query_value)
-        if query_value is None:
+        query_value = request.POST.get('houseInput','')
+        query_form = request.POST.get('queryType', '')
+        print 'aaa', query_form, query_value
+        if query_value is '':
             return redirect('/employee/houseinfo')
 
         if query_form == '1':
-            house_typelist = House_Type.objects.filter(h_type_name__contains=query_value)
+            house_typelist = House_Type.objects.filter(h_type_name__exact=query_value)
             if house_typelist.count() == 0:
                 return redirect('/employee/houseinfo')
             house_list = House.objects.filter(house_housetype=house_typelist).filter(house_delete=False)

@@ -38,7 +38,7 @@
 						</div>
 					</td>
 					<td bgcolor="#FFFFFF">
-						<input type="text" style="width: 145px" onblur="nblur();" class="noticeman" name="noticeman" value="">
+						<input type="text" style="width: 145px" onblur="nblur2();" class="noticeman" name="noticeman" value="">
 						&nbsp;
 					</td>
 				</tr>
@@ -50,7 +50,7 @@
 						</div>
 					</td>
 					<td  bgcolor="#FFFFFF">
-                        <textarea name="noticecontent" class="noticecontent" onblur="nblur()" cols="100" rows="25"></textarea>
+                        <textarea name="noticecontent" class="noticecontent" cols="100" rows="25"></textarea>
 						&nbsp;
 					</td>
 				</tr>
@@ -80,12 +80,15 @@
 		</form>
         <script>
             function nblur() {
-                var theme_val = $('.noticetheme').val().length
-                var content_val = $('.noticecontent').val().length
-                var man_val = $('.noticeman').val().length
-                console.log('aaa测试')
-                if(theme_val == 0 || content_val == 0 || man_val == 0){
-                    alert('输入不可为空 ! 瓜呱')
+                var theme_val = $('.noticetheme').val().length;
+                if(theme_val == 0){
+                    alert('公告主题输入不可为空 ! 瓜呱')
+                }
+            }
+            function nblur2() {
+                var man_val = $('.noticeman').val().length;
+                if(man_val == 0){
+                    alert('公告人输入不可为空 ! 瓜呱')
                 }
             }
         </script>

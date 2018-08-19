@@ -39,6 +39,8 @@ urlpatterns=[
     # 来源删除
     url(r'^del_source/$',views.del_source),
     url(r'distribute/$',views.Distribute.as_view()),
+
+    #客户分配页面
     url(r'singledis/$',views.singledis),
 
     ## 客户关怀
