@@ -13,7 +13,7 @@ from django.shortcuts import render, redirect
 # 定义分页函数
 def pages(employ_list, num):
     num = int(num)
-    pageobj = Paginator(employ_list, 24)
+    pageobj = Paginator(employ_list, 3)
     pageall = pageobj.num_pages
     if num > pageall:
         num = pageall

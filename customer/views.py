@@ -151,10 +151,10 @@ def addcustomer_view(request):
 
 def eidt_info(customer_id,c_gender,c_mobile,c_address,c_telephone,c_company,c_email,c_QQ,c_change_people,
     c_weibo,c_MSN,c_remark,c_profession,c_type,c_emp,c_source,c_state,**kwargs):
-        cus_type=Customer_Type.objects.get(c_type_name=c_type[0])
-        cus_emp=Employee_Info.objects.get(employee_name=c_emp[0])
-        cus_source=Customer_Source.objects.get(c_source_name=c_source[0])
-        cus_state=customer_State.objects.get(c_state_name=c_state[0])
+        cus_type=Customer_Type.objects.get(c_type_id=c_type[0])
+        cus_emp=Employee_Info.objects.get(employee_id=c_emp[0])
+        cus_source=Customer_Source.objects.get(c_source_id=c_source[0])
+        cus_state=customer_State.objects.get(c_state_id=c_state[0])
         customer=Customer_Info.objects.get(customer_id=customer_id[0])
         customer.c_gender = c_gender[0]
         customer.c_mobile = c_mobile[0]
@@ -193,8 +193,6 @@ def eidt_view(request):
         return render(request,'customer_edit.html',{'customer':customer,'employee_list':employee_list,'source_list':source_list,'type_list':type_list,'state_list':state_list})
 
     else:
-        print len(request.POST)
-        print request.POST
         eidt_info(**request.POST)
         return HttpResponseRedirect('/customer/showinfo/')
 
@@ -361,11 +359,8 @@ def care_view(request):
                        'page_counter': page_counter})
 
 
-
-
-
 def add_careinfo(care_theme,c_care,care_time,careNexttime1,careWay,care_remark,**kwargs):
-    cus_care=Customer_Info.objects.get(c_name=c_care[0])
+    cus_care=Customer_Info.objects.get(customer_id=c_care[0])
     Customer_Care.objects.create(care_theme=care_theme[0],
                                     care_time=care_time[0],
                                     care_nexttime=careNexttime1[0],
@@ -373,6 +368,16 @@ def add_careinfo(care_theme,c_care,care_time,careNexttime1,careWay,care_remark,*
                                     care_remark=care_remark[0],
                                     cus_care=cus_care,
                                  )
+
+def update_care(care_theme,c_care,care_time,careNexttime1,careWay,care_remark,**kwargs):
+    care=Customer_Care.objects.get(cus_care_id=c_care[0])
+    care.care_theme = care_theme[0]
+    care.care_time = care_time[0]
+    care.care_nexttime = careNexttime1[0]
+    care.care_way = careWay[0]
+    care.care_remark = care_remark[0]
+    care.care_is_delete=False
+    care.save()
 
 # 关怀添加
 def care_add(request):
@@ -390,7 +395,12 @@ def care_add(request):
         return render(request,'customer_care_add.html',{'customer_list':customerlist})
 
     else:
-        add_careinfo(**request.POST)
+        customer_id=request.POST.get('c_care')
+        care=Customer_Care.objects.filter(cus_care_id=customer_id)
+        if care.count()==0:
+            add_careinfo(**request.POST)
+        else:
+            update_care(**request.POST)
         return HttpResponseRedirect('/customer/customer_care/')
 
 

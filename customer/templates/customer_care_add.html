@@ -61,7 +61,7 @@
 						<select name="c_care" style="width: 145px">
 							{% for customer in customer_list %}
 
-							<option value="{{ customer.c_name }}">{{ customer.c_name }}</option>
+							<option value="{{ customer.customer_id }}">{{ customer.c_name }}</option>
 
                             {% endfor %}
 						</select>
