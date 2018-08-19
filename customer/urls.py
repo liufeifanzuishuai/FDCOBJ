@@ -39,5 +39,14 @@ urlpatterns=[
     # 来源删除
     url(r'^del_source/$',views.del_source),
     url(r'distribute/$',views.Distribute.as_view()),
-    url(r'singledis/$',views.singledis)
+    url(r'singledis/$',views.singledis),
+
+    ## 客户关怀
+    url(r'^customer_care/$',views.care_view),
+    # 关怀添加
+    url(r'^care_add/$',views.care_add),
+    # 关怀编辑
+    url(r'^care_edit/$',views.care_eidt),
+    # 删除关怀
+    url(r'^del_care/$',views.del_care),
 ]
