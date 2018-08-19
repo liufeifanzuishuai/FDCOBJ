@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.views import View
+
 from .models import *
 # Create your views here.
 # 分页
@@ -22,6 +24,18 @@ def paging(request,tablename):
     # 总页数
     page_counter = page_obj.num_pages
     return num,list_page,counter,page_counter
+
+# 定义分页函数2
+def pages(employ_list, num):
+    num = int(num)
+    pageobj = Paginator(employ_list, 24)
+    pageall = pageobj.num_pages
+    if num > pageall:
+        num = pageall
+    if num < 1:
+        num = 1
+    employ_list = pageobj.page(num)
+    return employ_list, pageall
 
 
 ## 显示客户信息页面
@@ -293,6 +307,31 @@ def del_source(request):
     source.c_source_delete=True
     source.save()
     return HttpResponseRedirect('/customer/customer_source/')
+
+
+class Distribute(View):
+    def get(self,request,*args,**kwargs):
+        #获取没有被删除的客户
+        customer_Info_list = Customer_Info.objects.filter(c_is_delete=False)
+        num=request.GET.get('num',1)
+        customer_Info_list, pageall = pages(customer_Info_list, num)
+        if pageall < int(num):
+            num = pageall
+        # 客户信息表的列表长度
+        count = len(customer_Info_list)
+        return render(request, 'customer_distribute_list.html',{"customer_Info_lsit": customer_Info_list, "count": count,'pages':pageall,'num':num})
+
+
+def singledis(request):
+    customer=request.GET.get('customer')
+    if request.method=="GET":
+        allemp=Employee_Info.objects.all()
+        return render(request,'distribute.html',{'customer':customer,'allemp':allemp})
+    else:
+        result=request.POST.get('Distribute')
+        Customer_Info.objects.filter(c_name=customer).update(c_founder=result)
+    return HttpResponse('提交成功')
+
 
 
 ## 客户关怀

@@ -1,197 +1,244 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
+<head>
     <title>center</title>
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	  <LINK href="/static/admin.css" type=text/css rel=stylesheet>
-	<style type="text/css">
-	/* #div1{
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <LINK href="/static/admin.css" type=text/css rel=stylesheet>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
 
-		width:50%;
-		height:80%;
+    <style type="text/css">
+        /* #div1{
 
-	}
-	#div2{
+            width:50%;
+            height:80%;
 
-		width:50%;
-		height:80%;
+        }
+        #div2{
 
-	}
-	#div3{
+            width:50%;
+            height:80%;
 
-		width:50%;
-		height:80%;
+        }
+        #div3{
 
-	}
-	#div4{
+            width:50%;
+            height:80%;
 
-		width:50%;
-		height:80%;
+        }
+        #div4{
 
-	} */
+            width:50%;
+            height:80%;
 
-</style>
+        } */
 
-  </head>
+    </style>
 
-  <body>
-    <form action="<%=basePath%>servlet/WorkQueryServlet" method="post"  >
-	<table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
-		<tr class=editHeaderTr>
-		<td class=editHeaderTd >  关怀提醒
-		<td class=editHeaderTd >  联系提醒
-  <tr>
-    <td width="50%" bgcolor="#FFFDF0">
-		<div align="center" id="div1">
-		<table  class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
-			<tr>
-					<td bgcolor="#FFFDF0"  colspan="2"><div align="center">查询方式：
-						<select name="addTime" style=" width: 145px">
-							<option  value="0">当天</option>
-							<option  value="7">一周内</option>
-							<option  value="15">半月内</option>
-							<option  value="30">一月内</option>
-						</select>
-					</div></td>
-					<td colspan="2" bgcolor="#FFFFFF"><div align="center"><input style=" width: 45px" type="button"   value="查询"></div></td>
-    			</tr>
-    			 <tr>
-	 				 <td bgcolor="#FFFDF0"><div align="center">关怀主题</div></td>
-		 			 <td bgcolor="#FFFDF0"><div align="center">关怀时间</div></td>
-		 			  <td bgcolor="#FFFDF0"><div align="center">关怀对象</div></td>
-   			 	</tr>
+</head>
 
+<body>
+<form action="/login/fist/showinfo" method="post">
+    {% csrf_token %}
+    <table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
+        <tr class=editHeaderTr>
+            <td height="40px" class=editHeaderTd colspan="8" align="center"> 公告信息</td>
+        </tr>
 
-					<tr>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					</tr>
-          						<tr>
-										<td height="20" bgcolor="#FFFFFF" colspan="22"  align="center">
-											<div align="center">
-												<span class="STYLE1">没有要关怀的对象！</span>
-											</div>
-										</td>
-									</tr>
+        <tr>
+            <td width="100%" bgcolor="#FFFDF0">
+                <div align="center" id="div3">
+                    <table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
 
-   		 </table>
-		</div>
-	</td>
-    <td bgcolor="#FFFDF0">
-		<div align="center" id="div2">
-			<table  class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
-			<tr>
-					<td bgcolor="#FFFDF0"  colspan="3"><div align="center">查询方式：
-						<select name="addTime1" style=" width: 145px">
-							<option  value="0">当天</option>
-							<option  value="7">一周内</option>
-							<option  value="15">半月内</option>
-							<option  value="30">一月内</option>
-						</select>
-					</div></td>
-					<td colspan="3" bgcolor="#FFFFFF"><div align="center"><input style=" width: 45px" type="button"   value="查询"></div></td>
-    			</tr>
-    			 <tr>
-	 				 <td bgcolor="#FFFDF0"><div align="center">联系主题</div></td>
-		 			 <td bgcolor="#FFFDF0"><div align="center">联系方式</div></td>
-		 			  <td bgcolor="#FFFDF0"><div align="center">应联系时间</div></td>
-		 	   		<td bgcolor="#FFFDF0"><div align="center">联系对象</div></td>
-   			 </tr>
+                        <tr>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">公告主题</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">公告内容</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">截止时间</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">公告人</div>
+                            </td>
+                        </tr>
+
+                        {% for notice in notice_list %}
+                             <tr>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ notice.notice_theme }}</div>
+                            </td>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ notice.notice_content|truncatewords:26 }}</div>
+                            </td>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ notice.notice_end_time }}</div>
+                            </td>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ notice.notice_man }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
 
 
-    		<tr>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-   	 		</tr>
-
-          						<tr>
-										<td height="20" bgcolor="#FFFFFF" colspan="22"  align="center">
-											<div align="center">
-												<span class="STYLE1">没有要联系的对象！</span>
-											</div>
-										</td>
-									</tr>
-   		 </table>
-		</div></td>
-    </tr>
-    <tr class=editHeaderTr>
-		<td class=editHeaderTd >  有效公告
-		<td class=editHeaderTd >  生日提醒
-  <tr>
-    <td width="50%" bgcolor="#FFFDF0">
-		<div align="center" id="div3">
-		<table  class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
-
-    			 <tr>
-	 				 <td bgcolor="#FFFDF0"><div align="center">公告主题</div></td>
-		 			 <td bgcolor="#FFFDF0"><div align="center">公告内容</div></td>
-		 			 <td bgcolor="#FFFDF0"><div align="center">截止时间</div></td>
-		 			  <td bgcolor="#FFFDF0"><div align="center">公告人</div></td>
-   			 	</tr>
+                        {% if notice_list.count == 0 %}
+                            <tr>
+                                <td height="20" bgcolor="#FFFFFF" colspan="22" align="center">
+                                    <div align="center">
+                                        <span class="STYLE1">没有有效的公告！</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
 
 
-					<tr>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					</tr>
-          						<tr>
-										<td height="20" bgcolor="#FFFFFF" colspan="22"  align="center">
-											<div align="center">
-												<span class="STYLE1">没有有效的公告！</span>
-											</div>
-										</td>
-									</tr>
 
-   		 </table>
-		</div>
-	</td>
-    <td bgcolor="#FFFDF0">
-		<div align="center" id="div4">
-			<table  class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
-			<tr>
-					<td bgcolor="#FFFDF0"  colspan="3"><div align="center">查询方式：
-						<select name="addTime2" style=" width: 145px">
-							<option  value="0">当天</option>
-							<option  value="7">一周内</option>
-							<option  value="15">半月内</option>
-							<option  value="30">一月内</option>
-						</select>
-					</div></td>
-					<td colspan="3" bgcolor="#FFFFFF"><div align="center"><input style=" width: 45px" type="button"   value="查询"></div></td>
-    			</tr>
-    			 <tr>
-	 				 <td bgcolor="#FFFDF0"><div align="center">过生的人</div></td>
-		 			 <td bgcolor="#FFFDF0"><div align="center">生日时间</div></td>
-		 			  <td bgcolor="#FFFDF0"><div align="center">手机号码</div></td>
-		 	   		<td bgcolor="#FFFDF0"><div align="center">客户状态</div></td>
-   			 </tr>
+                    </table>
+                </div>
+        </tr>
 
-    		<tr>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-					<td colspan="1" bgcolor="#FFFFFF"><div align="center"></div></td>
-   	 		</tr>
-          						<tr>
-										<td height="20" bgcolor="#FFFFFF" colspan="22"  align="center">
-											<div align="center">
-												<span class="STYLE1">没有要过生日的人！</span>
-											</div>
-										</td>
-									</tr>
-   		 </table>
-		</div></td>
-    </tr>
-</table>
+
+        <tr class=editHeaderTr>
+            <td height="40px" class=editHeaderTd colspan="8" align="center"> 关怀信息</td>
+        </tr>
+
+        <tr>
+            <td bgcolor="#FFFDF0">
+                 <div align="center" id="div1">
+                    <table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
+                        <tr>
+                            <td bgcolor="#FFFDF0" colspan="2">
+                                <div align="center">查询方式：
+                                    <select name="addTime" style=" width: 145px">
+                                        <option value="0">当天</option>
+                                        <option value="7">一周内</option>
+                                        <option value="15">半月内</option>
+                                        <option value="30">一月内</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td colspan="2" bgcolor="#FFFFFF">
+                                <div align="center"><input style=" width: 45px" type="submit" value="查询"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">关怀主题</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">关怀时间</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">关怀对象</div>
+                            </td>
+                        </tr>
+
+                        {% for care in care_list %}
+                            <tr>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ care.care_theme }}</div>
+                            </td>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ care.care_time }}</div>
+                            </td>
+                            <td colspan="1" bgcolor="#FFFFFF">
+                                <div align="center">{{ care.cus_care.c_name }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% if care_list.count == 0 %}
+                             <tr>
+                                <td height="20" bgcolor="#FFFFFF" colspan="22" align="center">
+                                    <div align="center">
+                                        <span class="STYLE1">没有要关怀的对象！</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+
+        <tr class=editHeaderTr>
+            <td height="40px" class=editHeaderTd colspan="8" align="center"> 生日信息</td>
+        </tr>
+
+
+        <tr>
+            <td bgcolor="#FFFDF0">
+                <div align="center" id="div4">
+                    <table class=editTable cellSpacing=1 cellPadding=0 width="100%" align=center border=0>
+                        <tr>
+                            <td bgcolor="#FFFDF0" colspan="3">
+                                <div align="center">查询方式：
+                                    <select name="addTime2" style=" width: 145px">
+                                        <option value="0">当天</option>
+                                        <option value="7">一周内</option>
+                                        <option value="15">半月内</option>
+                                        <option value="30">一月内</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td colspan="3" bgcolor="#FFFFFF">
+                                <div align="center"><input style=" width: 45px" type="submit" value="查询"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">Person</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">Brithday</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">Moblie</div>
+                            </td>
+                            <td bgcolor="#FFFDF0">
+                                <div align="center">State</div>
+                            </td>
+                        </tr>
+                        {% for customer in customer_list %}
+
+                            <tr>
+                                <td colspan="1" bgcolor="#FFFFFF">
+                                    <div align="center">{{ customer.c_name }}</div>
+                                </td>
+                                <td colspan="1" bgcolor="#FFFFFF">
+                                    <div align="center">{{ customer.c_birthdate|date:'m月d日' }}</div>
+                                </td>
+                                <td colspan="1" bgcolor="#FFFFFF">
+                                    <div align="center">{{ customer.c_mobile }}</div>
+                                </td>
+                                <td colspan="1" bgcolor="#FFFFFF">
+                                    <div align="center">{{ customer.cus_state.c_state_name }}</div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% if customer_list.count == 0 %}
+                            <tr>
+                                <td height="20" bgcolor="#FFFFFF" colspan="22" align="center">
+                                    <div align="center">
+                                        <span class="STYLE1">没有要过生日的人！</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
 </form>
-  </body>
+</body>
 </html>
