@@ -39,7 +39,7 @@ urlpatterns=[
     # 来源删除
     url(r'^del_source/$',views.del_source),
     url(r'distribute/$',views.Distribute.as_view()),
-    url(r'singledis/$',views.singledis)
+    url(r'singledis/$',views.singledis),
 
     ## 客户关怀
     url(r'^customer_care/$',views.care_view),
