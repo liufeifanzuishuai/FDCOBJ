@@ -31,11 +31,11 @@ def doLogin(request):
             #这里需要给前端页面一个判断如果密码失败就alter--
             errori=False
             if flag:
-                response.set_cookie('login',userNum+','+userPw,max_age=3*24*60*60,path='/login/')
+                response.set_cookie('login',userNum+','+userPw,max_age=3*24*60*60,path='/')
             else:
                 #这里判断不勾选记住密码，那么一定要删除cookie--
                 # response.delete_cookie('login')
-                response.set_cookie('login',max_age=0,path='/login/')
+                response.set_cookie('login',max_age=0,path='/')
             response.setdefault('Location', '/login/fist/')
             response.status_code = 302
             return response
@@ -55,7 +55,11 @@ def fist_view(request):
 
 
 def top_view(request):
-    return render(request,'top.html')
+    login = request.COOKIES['login']
+    login_list = login.split(',')
+    uname = login_list[0]
+    name = Employee_Info.objects.get(employee_account=uname).employee_name
+    return render(request,'top.html',{'curuser':name})
 
 
 def left_view(request):

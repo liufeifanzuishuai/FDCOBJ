@@ -328,7 +328,7 @@ def singledis(request):
     else:
         result=request.POST.get('Distribute')
         Customer_Info.objects.filter(c_name=customer).update(c_founder=result)
-    return HttpResponse('提交成功')
+    return HttpResponseRedirect('/customer/distribute/')
 
 
 
