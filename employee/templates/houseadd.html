@@ -67,7 +67,7 @@
                         </div>
                     </td>
                     <td colspan="6" bgcolor="#FFFFFF">
-                        <input type="text" style="width: 145px" class="houseenv" onblur="dblur();" name="houseenv" value="">&nbsp;
+                        <input type="text" style="width: 145px" class="houseenv" onblur="dblur1();" name="houseenv" value="">&nbsp;
                     </td>
                 </tr>
 
@@ -100,10 +100,16 @@
                 }
             }
             function dblur() {
-                var dinput_val = $('.houseaddress').val()
-                var einput_val = $('.houseenv').val()
-                if(dinput_val.length == 0 || einput_val.length == 0){
-                    alert('房屋地址必须输入, 房屋环境不可为空')
+                var dinput_val = $('.houseaddress').val();
+                var einput_val = $('.houseenv').val();
+                if(dinput_val.length == 0 ){
+                    alert('房屋地址必须输入')
+                }
+            }
+             function dblur1() {
+                var einput_val = $('.houseenv').val();
+                if( einput_val.length == 0){
+                    alert('房屋环境不可为空')
                 }
             }
         </script>
