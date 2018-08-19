@@ -37,7 +37,7 @@
 		<td colspan="3" bgcolor="#FFFFFF"><select     name="c_emp" style=" width: 145px">
 
             {% for employee in employee_list %}
-			    <option    value="{{ employee.employee_name }}">{{ employee.employee_name }}</option>
+			    <option    value="{{ employee.employee_id }}">{{ employee.employee_name }}</option>
             {% endfor %}
 
 			</select>		</td>
@@ -49,7 +49,7 @@
 					<td width="37%" colspan="3" bgcolor="#FFFFFF">
 						<select name="c_source" style="width: 145px">
                             {% for source in source_list %}
-                                <option value="{{ source.c_source_name}}">{{ source.c_source_name }}</option>
+                                <option value="{{ source.c_source_id}}">{{ source.c_source_name }}</option>
                             {% endfor %}
 
 						</select>
@@ -73,7 +73,7 @@
 					<td colspan="3" bgcolor="#FFFFFF">
 						<select name="c_state" style="width: 145px">
                             {% for state in state_list %}
-							    <option value="{{ state.c_state_name }}" selected="selected" >{{ state.c_state_name }}</option>
+							    <option value="{{ state.c_state_id }}" selected="selected" >{{ state.c_state_name }}</option>
                             {% endfor %}
 						</select>
 					</td>
@@ -102,7 +102,7 @@
 					<td colspan="3" bgcolor="#FFFFFF">
 						<select name="c_type" style="width: 145px">
                             {% for type in type_list %}
-                                <option value="{{ type.c_type_name }}" selected="selected" >{{ type.c_type_name }}</option>
+                                <option value="{{ type.c_type_id }}" selected="selected" >{{ type.c_type_name }}</option>
                             {% endfor %}
 
 
