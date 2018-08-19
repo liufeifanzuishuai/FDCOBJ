@@ -23,7 +23,7 @@ def doLogin(request):
         userPw=request.POST.get('userPw')
         flag=request.POST.get('flag')
         #需要从数据库获取用户名和密码,注意这里不需要判断非空。-
-        s_count=Employee_Info.objects.filter(employee_name=userNum,employee_password=userPw).count()
+        s_count=Employee_Info.objects.filter(employee_account=userNum,employee_password=userPw).count()
         errori=True
         if s_count==1:
             response.content='登陆成功'
@@ -35,7 +35,7 @@ def doLogin(request):
                 #这里判断不勾选记住密码，那么一定要删除cookie--
                 # response.delete_cookie('login')
                 response.set_cookie('login',max_age=0,path='/login/')
-            response.setdefault('Location', '/login/first/')
+            response.setdefault('Location', '/login/fist/')
             response.status_code = 302
             return response
         else:

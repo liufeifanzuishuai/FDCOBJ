@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'FDCOBJ.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'180818db',
-        'HOST':'127.0.0.1',
+        'NAME':'fdcobj',
+        'HOST':'192.168.1.105',
         'PORT':3306,
         'USER':'root',
-        'PASSWORD':'123123'
+        'PASSWORD':'123456'
     }
 }
 
