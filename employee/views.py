@@ -38,7 +38,7 @@ class Employinfo(View):
         query_value = request.POST.get('queryType')
         query_form = request.POST.get('userName', None)
         print('aaa', query_form, query_value)
-        if query_form is None:
+        if len(query_form) == 0:
             return redirect('/employee/employinfo/')
         if query_value == '1':
             employ_list = Employee_Info.objects.filter(employee_name__contains=query_form).filter(employee_delete=False)

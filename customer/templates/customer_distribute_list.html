@@ -155,8 +155,9 @@
                         <td>
                             <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="b5d6e6" onmouseover="changeto()" onmouseout="changeback()">
                                 <tr>
-                                    <td width="2%" height="22" background="/static/bg.gif" bgcolor="#FFFFFF">
-                                        <div align="center"><input type="checkbox" id="check" name="checkbox1" value="checkbox1"/></div>
+                                    <td width="4%" height="22" background="/static/bg.gif" bgcolor="#FFFFFF">
+                                        <div align="center"><span class="STYLE1">序号</span></div>
+{#                                            <input type="hidden" id="check" name="checkbox1" value="checkbox1"/></div>#}
                                     </td>
                                     <td width="8%" height="22" background="/static/bg2.gif" bgcolor="#FFFFFF">
                                         <div align="center"><span class="STYLE1">姓名</span></div>
@@ -188,7 +189,7 @@
                                 {% for customer_Info in customer_Info_lsit %}
                                     <tr>
                                         <td width="2%" height="22" background="/static/bg.gif" bgcolor="#FFFFFF">
-                                            <div align="center"><input type="checkbox" name="checkbox" value="7"/></div>
+                                            <div align="center"><span class="STYLE1">{{ forloop.counter }}</span></div>
                                         </td>
                                         <td height="20" bgcolor="#FFFFFF" style="width: 8%">
                                             <div align="center"><span class="STYLE1">{{ customer_Info.c_name }}</span></div>
@@ -281,7 +282,9 @@
                                                 </td>
 
                                                 <td width="40">
-                                                    <img src="/static/go.gif" width="37" height="15"/>
+                                                    <a href="/customer/distribute/?num={{ pages }}">
+                                                         <img src="/static/go.gif" width="37" height="15"/>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </table>
