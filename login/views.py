@@ -55,7 +55,10 @@ def fist_view(request):
 
 
 def top_view(request):
-    login = request.COOKIES['login']
+    try:
+        login = request.COOKIES['login']
+    except:
+        login = 'admin,'
     login_list = login.split(',')
     uname = login_list[0]
     name = Employee_Info.objects.get(employee_account=uname).employee_name

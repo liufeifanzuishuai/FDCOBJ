@@ -132,7 +132,7 @@ a {
 																	</td>
 																	<td width="50">
 																		<div align="center">
-																			<a href="<%=basePath%>login.jsp" target="_parent"><img
+																			<a href="/login/" target="_parent"><img
 																					src="/static/main_20.gif"
 																					width="48" height="19">
 																			</a>
@@ -147,7 +147,7 @@ a {
 																	<td width="100">
 																		<div align="center">
 																			<a
-																				href="<%=basePath%>servlet/UserUpdateServlet?id=<%=userInfo.getUserId()%>"
+																				href="/employee/edit?id=1"
 																				target="mainFrame"><img
 																					src="/static/main_22.gif"
 																					width="98" height="19">
@@ -244,7 +244,7 @@ a {
 																		onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
 																		onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
 																		<div align="center" class="STYLE3">
-																			<a href="<%=basePath%>servlet/WorkQueryServlet"
+																			<a href="/login/fist/center.html/"
 																				target="mainFrame">工作台</a>
 																		</div>
 																	</td>
@@ -258,25 +258,25 @@ a {
 												<img src="/static/main_34.gif"
 													width="3" height="28">
 											</td>
-											<td width="63"   >
-												<table width="58" border="0" align="center" cellpadding="0"
-													cellspacing="0">
-													<tr      >
-														<td height="20" style="cursor: hand"
-															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
-															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
-															<div align="center" class="STYLE3">
-																<a href="<%=basePath%>servlet/ReportFormsQueryServlet"
-																	target="mainFrame">报表</a>
-															</div>
-														</td>
-													</tr>
-												</table>
-											</td>
-											<td width="3">
-												<img src="/static/main_34.gif"
-													width="3" height="28">
-											</td>
+{#											<td width="63"   >#}
+{#												<table width="58" border="0" align="center" cellpadding="0"#}
+{#													cellspacing="0">#}
+{#													<tr      >#}
+{#														<td height="20" style="cursor: hand"#}
+{#															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "#}
+{#															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">#}
+{#															<div align="center" class="STYLE3">#}
+{#																<a href="<%=basePath%>servlet/ReportFormsQueryServlet"#}
+{#																	target="mainFrame">报表</a>#}
+{#															</div>#}
+{#														</td>#}
+{#													</tr>#}
+{#												</table>#}
+{#											</td>#}
+{#											<td width="3">#}
+{#												<img src="/static/main_34.gif"#}
+{#													width="3" height="28">#}
+{#											</td>#}
 											<td width="63">
 												<table width="58" border="0" align="center" cellpadding="0"
 													cellspacing="0">
@@ -286,7 +286,7 @@ a {
 															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
 															<div align="center" class="STYLE3">
 																<a
-																	href="<%=basePath%>servlet/CustomerQueryServlet?userId=<%=userInfo.getUserId()%>"
+																	href="/customer/showinfo/"
 																	target="mainFrame">客户信息</a>
 															</div>
 														</td>
@@ -305,7 +305,7 @@ a {
 															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
 															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
 															<div align="center" class="STYLE3">
-																<a href="<%=basePath%>servlet/UserQueryServlet"
+																<a href="/employee/employinfo/"
 																	target="mainFrame">员工信息</a>
 															</div>
 														</td>
@@ -324,7 +324,7 @@ a {
 															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
 															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
 															<div align="center" class="STYLE3">
-																<a href="<%=basePath%>servlet/NoticeQueryServlet"
+																<a href="/employee/notice"
 																	target="mainFrame">公告信息</a>
 															</div>
 														</td>
@@ -335,6 +335,25 @@ a {
 												<img src="/static/main_34.gif"
 													width="3" height="28">
 											</td>
+{#											<td width="63">#}
+{#												<table width="58" border="0" align="center" cellpadding="0"#}
+{#													cellspacing="0">#}
+{#													<tr>#}
+{#														<td height="20" style="cursor: hand"#}
+{#															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "#}
+{#															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">#}
+{#															<div align="center" class="STYLE3">#}
+{#																<a href="<%=basePath%>servlet/EmailQueryServlet"#}
+{#																	target="mainFrame">发件箱</a>#}
+{#															</div>#}
+{#														</td>#}
+{#													</tr>#}
+{#												</table>#}
+{#											</td>#}
+{#											<td width="3">#}
+{#												<img src="/static/main_34.gif"#}
+{#													width="3" height="28">#}
+{#											</td>#}
 											<td width="63">
 												<table width="58" border="0" align="center" cellpadding="0"
 													cellspacing="0">
@@ -343,52 +362,33 @@ a {
 															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
 															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
 															<div align="center" class="STYLE3">
-																<a href="<%=basePath%>servlet/EmailQueryServlet"
-																	target="mainFrame">发件箱</a>
-															</div>
-														</td>
-													</tr>
-												</table>
-											</td>
-											<td width="3">
-												<img src="/static/main_34.gif"
-													width="3" height="28">
-											</td>
-											<td width="63">
-												<table width="58" border="0" align="center" cellpadding="0"
-													cellspacing="0">
-													<tr>
-														<td height="20" style="cursor: hand"
-															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
-															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
-															<div align="center" class="STYLE3">
-																<a href="<%=basePath%>servlet/HouseQueryServlet?userId=<%=userInfo.getUserId()%>"
+																<a href="/employee/houseinfo"
 																	target="mainFrame">房屋信息</a>
 															</div>
 														</td>
 													</tr>
 												</table>
 											</td>
-											<td width="3">
-												<img src="/static/main_34.gif"
-													width="3" height="28">
-											</td>
-											<td width="63">
-												<table width="58" border="0" align="center" cellpadding="0"
-													cellspacing="0">
-													<tr>
-														<td height="20" style="cursor: hand"
-															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "
-															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">
-															<div align="center" class="STYLE3">
-																<a
-																	href="<%=basePath%>view/fetion/fetion_add.jsp"
-																	target="mainFrame">发送飞信</a>
-															</div>
-														</td>
-													</tr>
-												</table>
-											</td>
+{#											<td width="3">#}
+{#												<img src="/static/main_34.gif"#}
+{#													width="3" height="28">#}
+{#											</td>#}
+{#											<td width="63">#}
+{#												<table width="58" border="0" align="center" cellpadding="0"#}
+{#													cellspacing="0">#}
+{#													<tr>#}
+{#														<td height="20" style="cursor: hand"#}
+{#															onMouseOver="this.style.backgroundImage='url(/static/bg.gif)';this.style.borderStyle='solid';this.style.borderWidth='1';borderColor='#a6d0e7'; "#}
+{#															onmouseout="this.style.backgroundImage='url()';this.style.borderStyle='none'">#}
+{#															<div align="center" class="STYLE3">#}
+{#																<a#}
+{#																	href="<%=basePath%>view/fetion/fetion_add.jsp"#}
+{#																	target="mainFrame">发送飞信</a>#}
+{#															</div>#}
+{#														</td>#}
+{#													</tr>#}
+{#												</table>#}
+{#											</td>#}
 
 
 											<td>
